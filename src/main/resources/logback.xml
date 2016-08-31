@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 日志文件目录 -->
+    <property name="log.path" value="/opt/logs"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <Encoding>UTF-8</Encoding>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/other.%d{yyyy-MM-dd-HH:mm:ss.SSS}.log
+            </fileNamePattern>
+            <!-- <maxHistory>10</maxHistory> -->
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date|%thread|%X{invokeNo}|%level|%logger{50}|%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="DEBUG"/> <!--[TRACE,DEBUG,INFO,WARN,ERROR]-->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE_LOG"/>
+    </root>
+</configuration>
